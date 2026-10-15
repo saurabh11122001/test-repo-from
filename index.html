@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f4f6f8;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form, #result {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            background: #1677ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            display: none;
+            border-left: 5px solid green;
+        }
+
+        #result h3 {
+            color: green;
+        }
+
+        .info {
+            margin: 10px 0;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Registration Form</h2>
+
+    <form id="registrationForm">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="Full Name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="Email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="Phone Number" required>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="Gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="message">Address / Message</label>
+        <textarea id="message" name="Address / Message"
+                  rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result" aria-live="polite">
+        <h3>Submitted Successfully!</h3>
+        <p>Your submitted information is shown below:</p>
+        <div id="submittedInfo"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("registrationForm");
+        const result = document.getElementById("result");
+        const submittedInfo = document.getElementById("submittedInfo");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+
+            submittedInfo.replaceChildren();
+
+            for (const [label, value] of formData.entries()) {
+                const row = document.createElement("p");
+                row.className = "info";
+
+                const strong = document.createElement("strong");
+                strong.textContent = label + ": ";
+
+                const text = document.createElement("span");
+                text.textContent = value;
+
+                row.append(strong, text);
+                submittedInfo.appendChild(row);
+            }
+
+            result.style.display = "block";
+            result.scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>
